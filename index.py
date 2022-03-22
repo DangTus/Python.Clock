@@ -51,9 +51,22 @@ def setText_function():
 # vẽ đồng hồ
 def draw_clock(time, tamX, tamY, r, lenKimGio, lenKimPhut, lenKimGiay):
 	# vẽ mặt đồng hồ
+	pygame.draw.circle(screen, BLACK, (tamX, tamY), r+3)
 	pygame.draw.circle(screen, WHILE, (tamX, tamY), r)
 
-	#vẽ kim đồng hồ
+	# vẽ điểm đánh dấu số phút
+	for i in range(0, 60, 5):
+		x1 = tamX + (r-10)*math.sin(i*math.pi/6)
+		y1 = tamY - (r-10)*math.cos(i*math.pi/6)
+		x2 = tamX + r*math.sin(i*math.pi/6)
+		y2 = tamY - r*math.cos(i*math.pi/6)		
+		pygame.draw.line(screen, BLACK, (x1, y1), (x2, y2))
+
+	# vẽ logo
+	text_logo = font.render("Tus", True, BLACK)
+	screen.blit(text_logo, align_center(text_logo, tamX-r, tamY-r, r*2, r))
+
+	# vẽ kim đồng hồ
 	hour = math.floor(time/3600)
 	minute = math.floor((time - hour*3600) / 60)
 	second = time - hour*3600 - minute*60
@@ -153,7 +166,7 @@ while running:
 	setText_function()
 
 	# draw_clock(thời gian(sec), tâm X, tâm Y, bán kính, len kim dài, len kim ngắn, tốc độ)
-	draw_clock(remaining, 275, 400, 100, 60, 90, 90)
+	draw_clock(remaining, 275, 400, 100, 50, 80, 80)
 
 	draw_thanh_thoi_gian(remaining, total)
 	
